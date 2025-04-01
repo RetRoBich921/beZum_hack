@@ -1,0 +1,820 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(78,22,9);
+    color: white;
+    font-family: Arial, sans-serif;
+    margin-bottom: 120px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(78,22,9,0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.country-selector {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.country-selector select {
+    padding: 10px;
+    font-size: 16px;
+    width: 200px;
+    background-color: rgb(98,32,19);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.events-section {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.events-section h2 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.auth-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    position: relative;
+    z-index: 1001;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    position: relative;
+    z-index: 1001;
+}
+
+.login-btn, .register-btn {
+    padding: 10px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    background-color: rgb(98,32,19);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.2);
+    position: relative;
+    z-index: 1001;
+}
+
+.login-btn:hover, .register-btn:hover {
+    transform: scale(1.05);
+    background-color: rgb(118,42,29);
+}
+
+.login-btn img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.advertisement {
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.advertisement img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(78,22,9);
+    padding: 20px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    min-width: 300px;
+    cursor: move;
+    user-select: none;
+}
+
+.modal-header {
+    padding: 10px;
+    cursor: move;
+    background: rgba(0, 0, 0, 0.3);
+    margin: -20px -20px 10px -20px;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid #fff;
+}
+
+.modal-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #ff0000;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgb(98,32,19);
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: rgb(118,42,29);
+}
+
+.popular-nicks {
+    margin-top: 20px;
+}
+
+.popular-nicks ul {
+    list-style: none;
+}
+
+.popular-nicks li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.popular-nicks li:hover {
+    background-color: #f0f0f0;
+}
+
+/* Стили для dashboard */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background: #000000 url('/images/flames.gif') repeat-x top;
+    color: #00ff00;
+    font-family: "Comic Sans MS", cursive;
+    text-shadow: 2px 2px 2px #000000;
+    border: 3px solid #ff0000;
+    padding: 10px;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #000000 url('/images/stars.gif') repeat;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ff0000;
+    border-radius: 0;
+    box-shadow: 0 0 10px #ff0000;
+}
+
+.user-info {
+    padding: 20px 0;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+    background: #000000;
+    border: 1px solid #00ff00;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+}
+
+.nav-btn {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background: #000000;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    margin: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px #00ff00;
+}
+
+.nav-btn:hover {
+    background: #003300;
+    border-color: #00ff00;
+    color: #ffffff;
+}
+
+.nav-btn.active {
+    background: #006600;
+    color: #ffffff;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.tab-content {
+    display: none;
+    background: #000000;
+    border: 2px solid #00ff00;
+    padding: 20px;
+    margin: 10px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Стили для кнопок закрытия */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.close-btn:hover {
+    color: rgba(255,255,255,0.8);
+}
+
+/* Обновляем стили модальных окон */
+.modal {
+    position: relative;
+}
+
+button, .btn {
+    background-color: rgb(98,32,19);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover, .btn:hover {
+    background-color: rgb(118,42,29);
+}
+
+input, select, textarea {
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+#countrySelect {
+    background-color: rgb(98,32,19);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+#countrySelect option {
+    background-color: rgb(78,22,9);
+    color: white;
+}
+
+#loginBtn, #registerBtn {
+    background-color: rgb(98,32,19);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.2);
+    font-weight: bold;
+}
+
+#loginBtn:hover, #registerBtn:hover {
+    background-color: rgb(118,42,29);
+}
+
+/* Стили для карточек событий в личном кабинете */
+#eventsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+#eventsList .event-card {
+    background: #000000;
+    border: 2px solid #ff0000;
+    padding: 15px;
+    margin: 10px 0;
+    color: #00ff00;
+}
+
+#eventsList .event-card:hover {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+#eventsList .event-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#eventsList .event-card h3 {
+    color: #ff0000;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 2px #000000;
+}
+
+#eventsList .event-description {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+#eventsList .event-info {
+    color: rgba(255,255,255,0.8);
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+#eventsList .event-spots {
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+#eventsList .join-queue-btn {
+    background: #000000;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 5px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+}
+
+#eventsList .join-queue-btn:hover {
+    background: #003300;
+    color: #ffffff;
+}
+
+#eventsList p {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1em;
+}
+
+.user-queues {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(98,32,19,0.3);
+    border-radius: 12px;
+}
+
+.user-queues h3 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.queue-card {
+    background: #000000 url('/images/matrix.gif') repeat;
+    border: 1px solid #00ff00;
+    margin: 10px 0;
+    padding: 15px;
+    color: #00ff00;
+}
+
+.queue-card h4 {
+    color: #ff0000;
+    text-shadow: 1px 1px 2px #ff0000;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.queue-info {
+    font-family: "Courier New", monospace;
+    color: #00ff00;
+}
+
+.queue-info p {
+    margin: 5px 0;
+    padding: 3px;
+    border-bottom: 1px dotted #00ff00;
+}
+
+.queue-timestamp {
+    color: #888888 !important;
+    font-size: 12px;
+    text-align: right;
+    font-style: italic;
+}
+
+#queuesList p {
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    padding: 20px;
+}
+
+/* Стили для полей ввода в админ-панели */
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+    background-color: rgba(255,255,255,0.9);
+    border: 1px solid rgba(0,0,0,0.2);
+    color: rgb(33,33,33);
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder,
+.admin-form select::placeholder {
+    color: rgba(33,33,33,0.6);
+}
+
+.admin-form label {
+    color: white;
+    margin-top: 10px;
+    display: block;
+}
+
+.admin-form .form-group {
+    margin-bottom: 15px;
+}
+
+/* Стили для бегущих строк */
+.marquee-container, .marquee-left, .marquee-right {
+    position: fixed;
+    height: 60px;
+    background: #000000;
+    overflow: hidden;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.marquee-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+}
+
+.marquee-left {
+    bottom: 60px;
+    left: -40vh;
+    width: 100vh;
+    transform: rotate(45deg);
+    transform-origin: bottom right;
+}
+
+.marquee-right {
+    bottom: 60px;
+    right: -40vh;
+    width: 100vh;
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+}
+
+.marquee, .marquee-diagonal {
+    display: flex;
+    width: fit-content;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 15px 0;
+    white-space: nowrap;
+}
+
+.marquee {
+    animation: marquee 10s linear infinite;
+}
+
+.marquee-diagonal {
+    animation: marquee-diagonal 15s linear infinite;
+}
+
+.marquee span, .marquee-diagonal span {
+    display: inline-block;
+    padding-right: 50px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes marquee-diagonal {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Мигающий текст */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+/* Счетчик посетителей */
+.visitor-counter {
+    text-align: center;
+    margin: 20px 0;
+    font-family: "Digital", monospace;
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000;
+}
+
+/* Кнопка "Добавить в закладки" */
+.add-to-favorites {
+    background: #ffff00;
+    border: 2px outset #ffff00;
+    color: #000000;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+/* Иконки мессенджеров */
+.messenger-icons {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.messenger-icons img {
+    width: 32px;
+    height: 32px;
+    margin: 0 5px;
+}
+
+/* Стили для карточек пользователей в админ-панели */
+.user-card {
+    background: #000000;
+    border: 2px solid #00ff00;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,255,0,0.2);
+}
+
+.user-card h4 {
+    color: #ff0000;
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #ff0000;
+}
+
+.user-card p {
+    color: #00ff00;
+    margin: 5px 0;
+    font-family: "Courier New", monospace;
+}
+
+.user-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.ban-btn, .delete-btn {
+    padding: 8px 15px;
+    border: 1px solid;
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.ban-btn {
+    background: #000000;
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.delete-btn {
+    background: #000000;
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.ban-btn:hover, .delete-btn:hover {
+    background: #ff0000;
+    color: #000000;
+    box-shadow: 0 0 10px #ff0000;
+}
+
+#usersList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Стиль для кнопки выхода в админ-панели */
+#adminLogout {
+    background: #000000;
+    border: 2px solid #ff0000;
+    color: #ff0000;
+    padding: 10px 20px;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+#adminLogout:hover {
+    background: #ff0000;
+    color: #000000;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.admin-logout-btn {
+    background: rgb(98,32,19);
+    color: white;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.admin-logout-btn:hover {
+    background: #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transform: scale(1.05);
+}
+
+.random-ad {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 5px;
+    border: 3px solid #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.7),
+                inset 0 0 10px rgba(255, 0, 0, 0.5);
+    display: none;
+    width: 250px;
+    height: 250px;
+    animation: adShake 0.5s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.random-ad:hover {
+    transform: scale(1.1) !important;
+    z-index: 10000 !important;
+}
+
+.random-ad img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.ad-close {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    animation: buttonPulse 1s infinite;
+}
+
+.ad-close:hover {
+    background: #ffffff;
+    color: #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+@keyframes adShake {
+    0%, 100% {
+        transform: translate(0, 0) rotate(var(--rotation, 0deg));
+    }
+    25% {
+        transform: translate(5px, 5px) rotate(calc(var(--rotation, 0deg) + 2deg));
+    }
+    50% {
+        transform: translate(-5px, 5px) rotate(calc(var(--rotation, 0deg) - 2deg));
+    }
+    75% {
+        transform: translate(5px, -5px) rotate(calc(var(--rotation, 0deg) + 2deg));
+    }
+}
+
+@keyframes buttonPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+} 

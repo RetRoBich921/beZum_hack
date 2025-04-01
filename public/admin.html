@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Besum Hack - Админ панель</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .event-form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .event-form input, 
+        .event-form select, 
+        .event-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .event-form input:focus, 
+        .event-form select:focus, 
+        .event-form textarea:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        
+        .event-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .event-form button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .event-form button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        
+        .event-form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .events-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .event-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .event-item:last-child {
+            border-bottom: none;
+        }
+        
+        .delete-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 50px auto;
+            position: relative;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-buttons button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .modal-buttons button:first-child {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .modal-buttons button:last-child {
+            background-color: #ff4444;
+            color: white;
+        }
+        
+        #eventPreview {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="user-info">
+                <span id="adminLogin">admin</span>
+            </div>
+            <nav>
+                <button class="nav-btn active" onclick="showTab('events')">События</button>
+                <button class="nav-btn" onclick="showTab('users')">Пользователи</button>
+                <button class="nav-btn" onclick="window.location.href='/dashboard.html'">Вернуться</button>
+                <button class="nav-btn" onclick="handleLogout()">Выйти</button>
+            </nav>
+        </div>
+        
+        <div class="main-content">
+            <div class="admin-header">
+                <h1>Админ-панель</h1>
+                <button id="adminLogout" class="admin-logout-btn">Выйти</button>
+            </div>
+            <div id="eventsTab" class="tab-content active">
+                <h2>Управление событиями</h2>
+                <form id="eventForm" class="event-form">
+                    <label for="eventTitle">Название события</label>
+                    <input type="text" id="eventTitle" required>
+                    
+                    <label for="eventDescription">Описание</label>
+                    <textarea id="eventDescription" required></textarea>
+                    
+                    <label for="eventDate">Дата</label>
+                    <input type="date" id="eventDate" required>
+                    
+                    <label for="eventTime">Время</label>
+                    <input type="time" id="eventTime" required>
+                    
+                    <label for="eventLocation">Местоположение</label>
+                    <input type="text" id="eventLocation" required>
+                    
+                    <label for="eventCountry">Страна</label>
+                    <select id="eventCountry" required>
+                        <option value="">Выберите страну</option>
+                        <option value="russia">Россия</option>
+                        <option value="ukraine">Украина</option>
+                        <option value="belarus">Беларусь</option>
+                        <option value="kazakhstan">Казахстан</option>
+                        <option value="usa">Америка</option>
+                        <option value="africa">Африка</option>
+                        <option value="france">Франция</option>
+                        <option value="portugal">Португалия</option>
+                    </select>
+                    
+                    <label for="eventSpots">Количество мест</label>
+                    <input type="number" id="eventSpots" required>
+                    
+                    <label for="eventImage">Изображение</label>
+                    <input type="file" id="eventImage" accept="image/*">
+                    
+                    <button type="submit">Создать событие</button>
+                </form>
+                <div id="eventsList"></div>
+            </div>
+            
+            <div id="usersTab" class="tab-content">
+                <h2>Список пользователей</h2>
+                <div id="usersList"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="confirmModal" style="display: none;">
+        <div class="modal-content">
+            <h3>Подтверждение создания события</h3>
+            <div id="eventPreview"></div>
+            <div class="modal-buttons">
+                <button onclick="confirmCreateEvent()">Подтвердить</button>
+                <button onclick="hideConfirmModal()">Отмена</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Проверка прав администратора
+        const currentUser = localStorage.getItem('currentUser');
+        if (currentUser !== 'admin') {
+            window.location.href = '/';
+        }
+        
+        // Загрузка событий
+        async function loadEvents() {
+            try {
+                const response = await fetch('/api/events');
+                const events = await response.json();
+                
+                document.getElementById('eventsList').innerHTML = events.map(event => `
+                    <div class="event-item">
+                        <h3>${event.title || 'Без названия'}</h3>
+                        <p>${event.description || 'Без описания'}</p>
+                        <p>Дата: ${event.date || 'Не указана'}</p>
+                        <p>Время: ${event.time || 'Не указано'}</p>
+                        <p>Местоположение: ${event.location || 'Не указано'}</p>
+                        <p>Места: ${event.availableSpots || '0'}</p>
+                        <p>Страна: ${event.country || 'Не указана'}</p>
+                        ${event.image ? `<img src="/uploads/${event.image}" alt="Изображение события" style="max-width: 200px;">` : ''}
+                        <button class="delete-btn" onclick="deleteEvent('${event.id}')">Удалить</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Ошибка загрузки событий:', error);
+            }
+        }
+        
+        let pendingEvent = null;
+        
+        document.getElementById('eventForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            pendingEvent = {
+                title: document.getElementById('eventTitle').value,
+                description: document.getElementById('eventDescription').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                location: document.getElementById('eventLocation').value,
+                country: document.getElementById('eventCountry').value,
+                availableSpots: document.getElementById('eventSpots').value
+            };
+            
+            // Показываем превью события и изображения
+            const imageInput = document.getElementById('eventImage');
+            let imagePreview = '';
+            if (imageInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('eventPreview').innerHTML = `
+                        <h4>${pendingEvent.title}</h4>
+                        <p>${pendingEvent.description}</p>
+                        <p>Дата: ${pendingEvent.date}</p>
+                        <p>Время: ${pendingEvent.time}</p>
+                        <p>Местоположение: ${pendingEvent.location}</p>
+                        <p>Страна: ${pendingEvent.country}</p>
+                        <p>Количество мест: ${pendingEvent.availableSpots}</p>
+                        <img src="${e.target.result}" alt="Предпросмотр" style="max-width: 200px; margin-top: 10px;">
+                    `;
+                };
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                document.getElementById('eventPreview').innerHTML = `
+                    <h4>${pendingEvent.title}</h4>
+                    <p>${pendingEvent.description}</p>
+                    <p>Дата: ${pendingEvent.date}</p>
+                    <p>Время: ${pendingEvent.time}</p>
+                    <p>Местоположение: ${pendingEvent.location}</p>
+                    <p>Страна: ${pendingEvent.country}</p>
+                    <p>Количество мест: ${pendingEvent.availableSpots}</p>
+                `;
+            }
+            
+            document.getElementById('confirmModal').style.display = 'block';
+        });
+        
+        async function confirmCreateEvent() {
+            try {
+                const imageInput = document.getElementById('eventImage');
+                
+                // Сначала загружаем изображение, если оно выбрано
+                if (imageInput.files.length > 0) {
+                    const imageFormData = new FormData();
+                    imageFormData.append('image', imageInput.files[0]);
+                    
+                    const uploadResponse = await fetch('/api/upload', {
+                        method: 'POST',
+                        body: imageFormData
+                    });
+                    
+                    if (!uploadResponse.ok) {
+                        throw new Error('Ошибка загрузки изображения');
+                    }
+                    
+                    const uploadResult = await uploadResponse.json();
+                    pendingEvent.image = uploadResult.filename;
+                }
+                
+                // Затем создаем событие
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(pendingEvent)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка при создании события');
+                }
+                
+                const result = await response.json();
+                if (result.success) {
+                    alert('Событие успешно создано!');
+                    loadEvents();
+                    document.getElementById('eventForm').reset();
+                    hideConfirmModal();
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка: ' + error.message);
+            }
+        }
+        
+        function hideConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            pendingEvent = null;
+        }
+        
+        // Удаление события
+        async function deleteEvent(eventId) {
+            try {
+                const response = await fetch(`/api/events/${eventId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadEvents();
+                }
+            } catch (error) {
+                console.error('Ошибка удаления события:', error);
+            }
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', loadEvents);
+    </script>
+</body>
+</html> 

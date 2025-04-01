@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Событие - Besum Hack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .event-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .event-details {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .queue-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .queue-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .queue-item:last-child {
+            border-bottom: none;
+        }
+        
+        .buy-btn {
+            background-color: #44ff44;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .back-btn {
+            background-color: #4444ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="event-container">
+        <button class="back-btn" onclick="window.location.href='/'">← Назад</button>
+        
+        <div class="event-details">
+            <h1 id="eventTitle"></h1>
+            <p id="eventDescription"></p>
+            <p>Дата: <span id="eventDate"></span></p>
+            <p>Время: <span id="eventTime"></span></p>
+            <p>Доступных мест: <span id="eventSpots"></span></p>
+            <p>Страна: <span id="eventCountry"></span></p>
+        </div>
+        
+        <div class="queue-section">
+            <h2>Очередь</h2>
+            <div id="queueList"></div>
+            
+            <div id="joinQueueForm" style="margin-top: 20px;">
+                <h3>Занять место в очереди</h3>
+                <input type="number" id="queuePrice" placeholder="Цена за место" min="0">
+                <button onclick="joinQueue()">Занять место</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        const eventId = new URLSearchParams(window.location.search).get('id');
+        
+        if (!eventId) {
+            window.location.href = '/';
+        }
+        
+        // Загрузка данных события
+        async function loadEvent() {
+            try {
+                const response = await fetch('/api/events');
+                const events = await response.json();
+                const event = events.find(e => e.id === eventId);
+                
+                if (!event) {
+                    window.location.href = '/';
+                    return;
+                }
+                
+                document.getElementById('eventTitle').textContent = event.title;
+                document.getElementById('eventDescription').textContent = event.description;
+                document.getElementById('eventDate').textContent = event.date;
+                document.getElementById('eventTime').textContent = event.time;
+                document.getElementById('eventSpots').textContent = event.availableSpots;
+                document.getElementById('eventCountry').textContent = event.country;
+                
+                loadQueue();
+            } catch (error) {
+                console.error('Ошибка загрузки события:', error);
+            }
+        }
+        
+        // Загрузка очереди
+        async function loadQueue() {
+            try {
+                const response = await fetch(`/api/queues/${eventId}`);
+                const queue = await response.json();
+                
+                document.getElementById('queueList').innerHTML = queue.map(item => `
+                    <div class="queue-item">
+                        <div>
+                            <strong>${item.username}</strong>
+                            <span>Цена: ${item.price}</span>
+                        </div>
+                        ${currentUser && currentUser !== item.username ? 
+                            `<button class="buy-btn" onclick="buySpot('${item.username}', ${item.price})">Купить</button>` : 
+                            ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Ошибка загрузки очереди:', error);
+            }
+        }
+        
+        // Занять место в очереди
+        async function joinQueue() {
+            if (!currentUser) {
+                alert('Необходимо войти в систему');
+                return;
+            }
+            
+            const price = document.getElementById('queuePrice').value;
+            if (!price || price < 0) {
+                alert('Введите корректную цену');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/queues/${eventId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: currentUser,
+                        price: parseInt(price)
+                    })
+                });
+                
+                if (response.ok) {
+                    loadQueue();
+                    document.getElementById('queuePrice').value = '';
+                }
+            } catch (error) {
+                console.error('Ошибка при занятии места:', error);
+            }
+        }
+        
+        // Покупка места
+        async function buySpot(username, price) {
+            if (!currentUser) {
+                alert('Необходимо войти в систему');
+                return;
+            }
+            
+            if (confirm(`Купить место у ${username} за ${price}?`)) {
+                try {
+                    const response = await fetch(`/api/queues/${eventId}/buy`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            buyer: currentUser,
+                            seller: username
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        loadQueue();
+                    }
+                } catch (error) {
+                    console.error('Ошибка при покупке места:', error);
+                }
+            }
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', loadEvent);
+    </script>
+</body>
+</html> 

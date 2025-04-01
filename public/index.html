@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Besum Hack - Покупка мест в очередях</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="country-selector">
+            <h2>Выберите страну:</h2>
+            <select id="countrySelect">
+                <option value="russia">Россия</option>
+                <option value="ukraine">Украина</option>
+                <option value="belarus">Беларусь</option>
+                <option value="kazakhstan">Казахстан</option>
+                <option value="usa">Америка</option>
+                <option value="africa">Африка</option>
+                <option value="france">Франция</option>
+                <option value="portugal">Португалия</option>
+            </select>
+        </div>
+
+        <div class="main-content">
+            <div class="auth-section">
+                <div class="buttons">
+                    <button id="loginBtn" class="login-btn">
+                        Вход
+                    </button>
+                    <button id="registerBtn" class="register-btn">
+                        Регистрация
+                    </button>
+                </div>
+            </div>
+
+            <div class="events-section">
+                <h2>Актуальные события</h2>
+                <div id="eventsList"></div>
+            </div>
+
+            <div class="advertisement">
+                <img src="images/reklama1.png" alt="Реклама">
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Вход</span>
+                <span class="modal-close">&times;</span>
+            </div>
+            <input type="text" id="loginUsername" placeholder="Имя пользователя">
+            <button id="loginSubmit">Войти</button>
+            <a href="#" id="forgotPassword">Забыли пароль?</a>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Регистрация</span>
+                <span class="modal-close">&times;</span>
+            </div>
+            <input type="text" id="registerUsername" placeholder="Имя пользователя">
+            <select id="registerCountry">
+                <option value="">Выберите страну</option>
+                <option value="russia">Россия</option>
+                <option value="kazakhstan">Казахстан</option>
+                <option value="uzbekistan">Узбекистан</option>
+                <option value="kyrgyzstan">Киргизия</option>
+                <option value="tajikistan">Таджикистан</option>
+                <option value="turkmenistan">Туркменистан</option>
+            </select>
+            <button id="registerSubmit">Зарегистрироваться</button>
+            <div class="popular-nicks">
+                <h3>Популярные никнеймы:</h3>
+                <ul>
+                    <li>admin</li>
+                    <li>albert2006</li>
+                    <li>ivanzolo2007</li>
+                    <li>gейmer1</li>
+                    <li>CuCe4Ka</li>
+                    <li>xAkEp_HaXeP</li>
+                    <li>NIGGA_KillER</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Бегущие строки -->
+    <div class="marquee-container">
+        <div class="marquee">
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+        </div>
+    </div>
+    
+    <div class="marquee-left">
+        <div class="marquee-diagonal">
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+        </div>
+    </div>
+    
+    <div class="marquee-right">
+        <div class="marquee-diagonal">
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+            <span>ССЫЛКА НА РЕГИСТРАЦИЮ В ОПИСАНИИ ПРОМОКОД OLGROCK-ЛОХ ДАЕТ 5.000 НА БАЛИК!!!</span>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 
